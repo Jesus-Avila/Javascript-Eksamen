@@ -1,0 +1,55 @@
+/* My colors */
+/* 013B45 blue */
+/* E3CB90 yellow */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #013b45;
+  --secondary-color: #e3cb90;
+  --mygrey: #1f1f1f;
+}
+
+/* Header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 8vh;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-family: "Poppins", sans-serif;
+  padding: 5px 20px;
+}
+
+/* nav {
+    display: flex;
+    align-items: center;
+} */
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+header img {
+  height: 8vh;
+}
+
+
+/* Footer */

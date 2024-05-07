@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail page</title>
+    <link rel="stylesheet" href="./css/cocktail.css">
+    <link rel="stylesheet" href="./css/global.css">
+</head>
+<body>
+    <header>
+        <div>
+            <p>JavaScript & API Eksamen</p>
+          </div>
+          <div>
+            <img src="./assets/discovery-cocktail-logo.png" alt="Discovery Cocktail Logo" />
+          </div>
+          <nav>
+            <ul>
+              <li><a href="./index.html">Home</a></li>
+              <li><a href="./mypage.html">My Page</a></li>
+            </ul>
+          </nav>
+    </header>
+    <main>
+        <div class="cocktail-card">
+            <div class="cocktail-card-top">
+                <div>
+                    <img src="./assets/chevron.png" alt="Chevron">
+                </div>
+                <h1 id="cocktail-name"></h1>
+                <div></div>
+            </div>
+            <div class="cocktail-card-bottom">
+                <div class="cocktail-image-container">
+                </div>
+                <div class="cocktail-info">
+                    <div class="cocktail-glass info">
+                        <h2>Glass</h2>
+                        <p id="glass-type"></p>
+                    </div>
+                    <div class="cocktail-ingredients info">
+                        <h2>Ingredients:</h2>
+                        <ul class="cocktail-ingredients-list">
+                        </ul>
+                    </div>
+                    <div class="cocktail-instructions-container info">
+                        <h2>Instructions:</h2>
+                        <p class="cocktail-instructions-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+    <footer></footer>
+
+    <script type="module" src="./js/cocktail.js"></script>
+</body>
+</html>
