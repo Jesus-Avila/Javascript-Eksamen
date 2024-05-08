@@ -6,7 +6,7 @@ export const fetchRandomCocktail = async () => {
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
         const data = await response.json();
         randomCocktail = data.drinks[0];
-        console.log(randomCocktail);
+        console.log('fetch random cocktail', randomCocktail);
         return randomCocktail;
     } catch (error) {
         console.log(error);
@@ -29,7 +29,7 @@ export const fetchSpecificCocktail = async (id) => {
         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
         const data = await response.json();
         const cocktail = data.drinks[0];
-        console.log('log from the ftech function', cocktail);
+        console.log('log from the fetch specific cocktail function', cocktail);
         return cocktail;
     } catch (error) {
         console.log(error);

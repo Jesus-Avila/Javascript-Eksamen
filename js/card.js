@@ -2,12 +2,39 @@
 
 const cocktailsList = document.querySelector('.cocktail-list');
 
+function saveCocktailToLocalStorage(cocktail) {
+    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
+    savedCocktails.push(cocktail);
+    localStorage.setItem('savedCocktails', JSON.stringify(savedCocktails));
+}
+
+function removeCocktailFromLocalStorage(cocktail) {
+    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails'));
+    let updatedCocktails = savedCocktails.filter(item => item.idDrink !== cocktail.idDrink);
+    localStorage.setItem('savedCocktails', JSON.stringify(updatedCocktails));
+}
+
+// Get favorites list from local storage
+export const getFavoritesList = () => {
+    const cocktailsInList = JSON.parse(localStorage.getItem('savedCocktails')) || [];
+    return cocktailsInList;
+}
+
+// Check if cocktail is in favorites list
+export const checkIfCocktailIsFavorite = (cocktail) => {
+    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
+    return savedCocktails.some(item => item.idDrink === cocktail.idDrink);
+}
+
+// Change button text to remove from favorites
+const changeButtonText = (button, cocktail) => {
+    return checkIfCocktailIsFavorite(cocktail) ? button.textContent = '- REMOVE' : button.textContent = '+ ADD';
+}
 
 // Create index card for each cocktail
 export const cocktailCard = (cocktail) => {
     // let favorite
     const image = cocktail.strDrinkThumb;
-    console.log(cocktail);
 
     // Create Card div
     const card = document.createElement('div');
@@ -32,6 +59,7 @@ export const cocktailCard = (cocktail) => {
 
     // Append Image to Card
     card.appendChild(img);
+
     // Append Card to List
     cocktailsList.appendChild(card);
 
@@ -72,7 +100,7 @@ export const cocktailCard = (cocktail) => {
 
     // Create and Append Add to favorites button to Text Div
     const favoriteButton = document.createElement('button');
-    favoriteButton.textContent = '+ Favorites';
+    changeButtonText(favoriteButton, cocktail);
     favoriteButton.style.cssText = `
     background-color: #e3cb90;
     color: #013b45;
@@ -82,10 +110,43 @@ export const cocktailCard = (cocktail) => {
     width: 70%;
     align-self: center;
     margin-top: 20px;`;
+
+    // Check if cocktail is in favorites list
+    // changeButtonText(favoriteButton, cocktail);
+
+    favoriteButton.classList.add('favorite-button');
+    favoriteButton.addEventListener('mouseover', () => {
+        favoriteButton.style.backgroundColor = '#f2a154';
+    });
+    favoriteButton.addEventListener('mouseout', () => {
+        favoriteButton.style.backgroundColor = '#e3cb90';
+    });
+
+    // Add to favorites button functionality
+    favoriteButton.addEventListener('click', (event) => {
+        if (checkIfCocktailIsFavorite(cocktail)) {
+            removeCocktailFromLocalStorage(cocktail);
+            changeButtonText(favoriteButton, cocktail);
+        } else {
+            saveCocktailToLocalStorage(cocktail);
+            changeButtonText(favoriteButton, cocktail);
+        }
+        event.stopPropagation();
+    });
+
+    // Append Button to Text Div
     textDiv.appendChild(favoriteButton);
 
     // Add pointer effect to card
     card.style.cursor = 'pointer';
+    card.addEventListener('mouseover', () => {
+        card.style.border = '7px solid #f2a154';
+        name.style.color = '#f2a154';
+    });
+    card.addEventListener('mouseout', () => {
+        card.style.border = '7px solid #e3cb90';
+        name.style.color = '#e3cb90';
+    });
 
     card.addEventListener('click', () => {
         // Navigate to the info page with the cocktail ID
