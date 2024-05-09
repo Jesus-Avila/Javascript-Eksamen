@@ -9,6 +9,7 @@ const changeButtonText = (button, cocktail) => {
 
 export const createAddDeleteButton = async (cocktail) => {
   const favoriteButton = document.createElement("button");
+  console.log('helo wrold',cocktail);
   changeButtonText(favoriteButton, cocktail);
   favoriteButton.style.cssText = `
   background-color: #e3cb90;
@@ -18,7 +19,8 @@ export const createAddDeleteButton = async (cocktail) => {
   cursor: pointer;
   width: 70%;
   align-self: center;
-  margin-top: 20px;`;
+  margin-top: 20px;
+  max-width: 300px;`;
 
   favoriteButton.classList.add("favorite-button");
   favoriteButton.addEventListener("mouseover", () => {

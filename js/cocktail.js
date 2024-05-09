@@ -1,5 +1,5 @@
 import { fetchSpecificCocktail } from './fetch.js';
-
+import { createAddDeleteButton } from './buttons.js';
 
 
 // Get the cocktail data from the API using the ID
@@ -9,20 +9,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(queryString);
     const cocktailID = parseInt(urlParams.get('id'));
     console.log(cocktailID);
-
+    
     const cocktail = await fetchSpecificCocktail(cocktailID);
     changeCocktailInfo(cocktail);
     console.log(cocktail);
 })
 
 // Change information on the page based on the cocktail data
-const changeCocktailInfo = (cocktail) => {
+const changeCocktailInfo = async (cocktail) => {
     // Get the elements from the HTML
     const cocktailName = document.querySelector('#cocktail-name');
     const cocktailGlass = document.querySelector('#glass-type');
     const cocktailIngredients = document.querySelector('.cocktail-ingredients-list');
     const cocktailImageDiv = document.querySelector('.cocktail-image-container');
     const cocktailInstructions = document.querySelector('.cocktail-instructions-text');
+    const buttonContainer = document.querySelector('.button-container');
 
     // Change the text content of the elements
     cocktailName.textContent = cocktail.strDrink;
@@ -56,4 +57,8 @@ const changeCocktailInfo = (cocktail) => {
 
     // Change the instructions
     cocktailInstructions.textContent = cocktail.strInstructions;
+
+    // Create the add to favorites button
+    const button = await createAddDeleteButton(cocktail);
+    buttonContainer.appendChild(button);
 }
