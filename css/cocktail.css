@@ -48,11 +48,24 @@ h1 {
     width: 100%;
 }
 
+.chevron-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+    margin-left: 10px;
+}
+
+.chevron-container:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .cocktail-card-bottom {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    margin: 20px 0 0 30px;
     color: white;
 }
 

@@ -8,11 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const cocktailID = parseInt(urlParams.get('id'));
-    console.log(cocktailID);
     
     const cocktail = await fetchSpecificCocktail(cocktailID);
     changeCocktailInfo(cocktail);
-    console.log(cocktail);
 })
 
 // Change information on the page based on the cocktail data
@@ -49,7 +47,6 @@ const changeCocktailInfo = async (cocktail) => {
     // Change the image of the cocktail
     const cocktailImage = document.createElement('img');
     cocktailImage.src = cocktail.strDrinkThumb;
-    console.log(cocktail.strDrinkThumb);
     cocktailImage.alt = cocktail.strDrink;
     cocktailImage.style.cssText = `
     width: 100%;`;
@@ -62,3 +59,8 @@ const changeCocktailInfo = async (cocktail) => {
     const button = await createAddDeleteButton(cocktail);
     buttonContainer.appendChild(button);
 }
+
+const backButton = document.querySelector('.chevron-container');
+backButton.addEventListener('click', () => {
+    window.history.back();
+});

@@ -35,7 +35,7 @@ export const fetchSpecificCocktail = async (id) => {
         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
         const data = await response.json();
         const cocktail = data.drinks[0];
-        console.log('log from the fetch specific cocktail function', cocktail);
+        console.log('Specific cocktail fetched from API', cocktail);
         return cocktail;
     } catch (error) {
         console.log(error);

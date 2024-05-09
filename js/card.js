@@ -3,17 +3,17 @@ import { createAddDeleteButton } from "./buttons.js";
 
 const cocktailsList = document.querySelector('.cocktail-list');
 
-function saveCocktailToLocalStorage(cocktail) {
-    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
-    savedCocktails.push(cocktail);
-    localStorage.setItem('savedCocktails', JSON.stringify(savedCocktails));
-}
+// function saveCocktailToLocalStorage(cocktail) {
+//     let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
+//     savedCocktails.push(cocktail);
+//     localStorage.setItem('savedCocktails', JSON.stringify(savedCocktails));
+// }
 
-function removeCocktailFromLocalStorage(cocktail) {
-    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails'));
-    let updatedCocktails = savedCocktails.filter(item => item.idDrink !== cocktail.idDrink);
-    localStorage.setItem('savedCocktails', JSON.stringify(updatedCocktails));
-}
+// function removeCocktailFromLocalStorage(cocktail) {
+//     let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails'));
+//     let updatedCocktails = savedCocktails.filter(item => item.idDrink !== cocktail.idDrink);
+//     localStorage.setItem('savedCocktails', JSON.stringify(updatedCocktails));
+// }
 
 // Get favorites list from local storage
 export const getFavoritesList = () => {
