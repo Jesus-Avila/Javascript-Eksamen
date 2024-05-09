@@ -96,7 +96,7 @@ export const deleteRequest = async (id) => {
 
 
 // Get request to retrieve all cocktails from the database
-const fetchAllCocktails = async () => {
+export const fetchAllCocktails = async () => {
     try {
         const response = await fetch(url, {
             method: "GET",

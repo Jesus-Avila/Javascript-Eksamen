@@ -1,15 +1,16 @@
 import { postRequest, deleteRequest, checkIfCocktailIsInDatabase } from "./fetch.js";
 
 // Change button text to remove from favorites
-const changeButtonText = (button, cocktail) => {
-  return !checkIfCocktailIsInDatabase(cocktail) ? (button.textContent = "- REMOVE") : (button.textContent = "+ ADD");
+const changeButtonText = async (button, cocktail) => {
+    const isInDatabase = await checkIfCocktailIsInDatabase(cocktail);
+    const result = isInDatabase ? (button.textContent = "- REMOVE") : (button.textContent = "+ ADD");
+    return result;
 };
 
 // Create and Append Add to favorites button to Text Div
 
 export const createAddDeleteButton = async (cocktail) => {
   const favoriteButton = document.createElement("button");
-  console.log('helo wrold',cocktail);
   changeButtonText(favoriteButton, cocktail);
   favoriteButton.style.cssText = `
   background-color: #e3cb90;

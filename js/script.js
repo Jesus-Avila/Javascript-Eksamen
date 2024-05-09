@@ -8,11 +8,11 @@ import { fetchTenRandomCocktails } from './fetch.js';
 
 let cocktailsArray;
 
-addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     fetchTenRandomCocktails().then(cocktails => {
         cocktailsArray = cocktails;
         cocktailsArray.forEach(cocktail => {
             cocktailCard(cocktail);
         });
     });
-});
+}); 
