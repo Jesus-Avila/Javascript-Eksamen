@@ -4,7 +4,25 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--mygrey);
+}
 
+
+.top-text {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.top-text p {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    text-align: left;
+    padding: 20px 0 0 20px;
+}
 
 .cocktail-list {
     display: flex;
