@@ -1,4 +1,4 @@
-
+import { postRequest, deleteRequest } from "./fetch.js";
 
 const cocktailsList = document.querySelector('.cocktail-list');
 
@@ -111,9 +111,6 @@ export const cocktailCard = (cocktail) => {
     align-self: center;
     margin-top: 20px;`;
 
-    // Check if cocktail is in favorites list
-    // changeButtonText(favoriteButton, cocktail);
-
     favoriteButton.classList.add('favorite-button');
     favoriteButton.addEventListener('mouseover', () => {
         favoriteButton.style.backgroundColor = '#f2a154';
@@ -126,9 +123,11 @@ export const cocktailCard = (cocktail) => {
     favoriteButton.addEventListener('click', (event) => {
         if (checkIfCocktailIsFavorite(cocktail)) {
             removeCocktailFromLocalStorage(cocktail);
+            deleteRequest(cocktail.idDrink);
             changeButtonText(favoriteButton, cocktail);
         } else {
             saveCocktailToLocalStorage(cocktail);
+            postRequest(cocktail);
             changeButtonText(favoriteButton, cocktail);
         }
         event.stopPropagation();

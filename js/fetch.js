@@ -1,11 +1,17 @@
-let randomCocktail;
+
 
 // Fetch data from API
 export const fetchRandomCocktail = async () => {
     try {
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
         const data = await response.json();
-        randomCocktail = data.drinks[0];
+        let randomCocktail = data.drinks[0];
+
+          // Remove properties with null values
+          randomCocktail = Object.fromEntries(
+            Object.entries(randomCocktail).filter(([key, value]) => value !== null)
+        );
+
         console.log('fetch random cocktail', randomCocktail);
         return randomCocktail;
     } catch (error) {
@@ -35,3 +41,118 @@ export const fetchSpecificCocktail = async (id) => {
         console.log(error);
     }
 }
+
+// crudapi key for cocktails pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ
+
+
+// POST request to add a new cocktail to the database
+const url = 'https://crudapi.co.uk/api/v1/cocktails';
+const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
+
+export const postRequest = async (data) => {
+fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'BEARER ' + key
+        },
+        body: JSON.stringify([data])
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to add data');
+        }
+    })
+    .then(data => {
+        console.log('Data added successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error adding data:', error);
+    })
+};
+
+// Delete request to remove a cocktail from the database
+export const deleteRequest = async (id) => {
+    const uuid = await fetchUUID(id);
+    try {
+        const response = await fetch(`${url}/${uuid}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'BEARER ' + key,
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+    } catch (error) {
+            console.error('There was a problem', error);
+    }
+};
+
+
+
+// Get request to retrieve all cocktails from the database
+const fetchAllCocktails = async () => {
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        
+        const responseData = await response.json();
+        console.log("GET from Crud API", responseData.items);
+        return responseData;
+    } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+    }
+};
+
+// Find uuid of specific cocktail in the database by its idDrink, RETURNS cocktail object matching the idDrink
+const findCocktail = async (cocktailList, idDrink) => {
+    const data = cocktailList;
+    const cocktail = data.items.find(item => item.idDrink == idDrink);
+    return cocktail;
+}
+
+// Fetch uuid of specific cocktail in the database by its idDrink
+const fetchUUID = async (id) => {
+    const cocktailList = await fetchAllCocktails();
+    const cocktail = await findCocktail(cocktailList, id);
+    console.log('this is the uuid', cocktail._uuid);
+    return cocktail._uuid;
+}
+
+// Get request to retrieve a specific cocktail from the database using its ID 
+const getSpecificRequest = async (id) => {
+    try {
+        const cocktailList = await fetchAllCocktails();
+        
+        const response = await fetch(`${url}/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        
+        const responseData = await response.json();
+        console.log("GET from Crud API", responseData.items);
+        return responseData;
+    } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+    }
+};
+
+
