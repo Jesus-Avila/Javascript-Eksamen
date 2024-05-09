@@ -66,7 +66,7 @@ fetch(url, {
         }
     })
     .then(data => {
-        console.log('Data added successfully:', data);
+        console.log('Cocktail added successfully:', data);
     })
     .catch(error => {
         console.error('Error adding data:', error);
@@ -81,12 +81,13 @@ export const deleteRequest = async (id) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'BEARER ' + key,
+                'Authorization': 'Bearer ' + key,
             },
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        console.log('Cocktail deleted successfully');
     } catch (error) {
             console.error('There was a problem', error);
     }
@@ -109,8 +110,7 @@ const fetchAllCocktails = async () => {
         }
         
         const responseData = await response.json();
-        console.log("GET from Crud API", responseData.items);
-        return responseData;
+        return responseData.items;
     } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
     }
@@ -119,7 +119,7 @@ const fetchAllCocktails = async () => {
 // Find uuid of specific cocktail in the database by its idDrink, RETURNS cocktail object matching the idDrink
 const findCocktail = async (cocktailList, idDrink) => {
     const data = cocktailList;
-    const cocktail = data.items.find(item => item.idDrink == idDrink);
+    const cocktail = data.find(item => item.idDrink == idDrink);
     return cocktail;
 }
 
@@ -127,8 +127,17 @@ const findCocktail = async (cocktailList, idDrink) => {
 const fetchUUID = async (id) => {
     const cocktailList = await fetchAllCocktails();
     const cocktail = await findCocktail(cocktailList, id);
-    console.log('this is the uuid', cocktail._uuid);
+    if (!cocktail) {
+        console.log(`Cocktail with id ${id} not found in database`);
+        return;
+    }
     return cocktail._uuid;
+}
+
+// Check if cocktail is in database
+export const checkIfCocktailIsInDatabase = async (cocktail) => {
+    const cocktailList = await fetchAllCocktails();
+    return cocktailList.some(item => item.idDrink === cocktail.idDrink);
 }
 
 // Get request to retrieve a specific cocktail from the database using its ID 

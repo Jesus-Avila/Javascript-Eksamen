@@ -1,4 +1,4 @@
-import { postRequest, deleteRequest } from "./fetch.js";
+import { postRequest, deleteRequest, checkIfCocktailIsInDatabase } from "./fetch.js";
 
 const cocktailsList = document.querySelector('.cocktail-list');
 
@@ -28,7 +28,7 @@ export const checkIfCocktailIsFavorite = (cocktail) => {
 
 // Change button text to remove from favorites
 const changeButtonText = (button, cocktail) => {
-    return checkIfCocktailIsFavorite(cocktail) ? button.textContent = '- REMOVE' : button.textContent = '+ ADD';
+    return !checkIfCocktailIsInDatabase(cocktail) ? button.textContent = '- REMOVE' : button.textContent = '+ ADD';
 }
 
 // Create index card for each cocktail
@@ -121,14 +121,14 @@ export const cocktailCard = (cocktail) => {
 
     // Add to favorites button functionality
     favoriteButton.addEventListener('click', (event) => {
-        if (checkIfCocktailIsFavorite(cocktail)) {
-            removeCocktailFromLocalStorage(cocktail);
-            deleteRequest(cocktail.idDrink);
-            changeButtonText(favoriteButton, cocktail);
-        } else {
+        if (!checkIfCocktailIsFavorite(cocktail)) {
             saveCocktailToLocalStorage(cocktail);
             postRequest(cocktail);
-            changeButtonText(favoriteButton, cocktail);
+            favoriteButton.textContent = '- REMOVE';
+        } else {
+            removeCocktailFromLocalStorage(cocktail);
+            deleteRequest(cocktail.idDrink);
+            favoriteButton.textContent = '+ ADD';
         }
         event.stopPropagation();
     });
