@@ -120,5 +120,40 @@ export const clearSessionStorage = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    pageState();
     loginButton();
 })
+
+// Function to toggle between login and registration sections
+const pageState = () => {
+    const loginSection = document.querySelector('.login-section');
+    const registrationSection = document.querySelector('.registration-section');
+    const registerLink = document.querySelector('#register-link');
+    const loginLink = document.querySelector('#login-link');
+
+    // Hide the registration section initially
+    registrationSection.style.display = 'none';
+    loginLink.parentElement.style.display = 'none';
+
+   // Event listener for the "Register" link
+   registerLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    // Toggle the visibility of the login and registration sections
+    loginSection.style.display = 'none';
+    registrationSection.style.display = 'block';
+    // Hide the login link and show the registration link
+    registerLink.parentElement.style.display = 'none';
+    loginLink.parentElement.style.display = 'block';
+});
+
+// Event listener for the "Login" link
+loginLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    // Toggle the visibility of the login and registration sections
+    registrationSection.style.display = 'none';
+    loginSection.style.display = 'block';
+    // Hide the registration link and show the login link
+    registerLink.parentElement.style.display = 'block';
+    loginLink.parentElement.style.display = 'none';
+});
+};
