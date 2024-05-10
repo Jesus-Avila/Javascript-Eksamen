@@ -13,23 +13,45 @@
 <!-- Make login section -->
     <main>
       <div class="wrapper">
-        <div class="login-section">
+
+        <div class="login-section" style="display: none;">
           <h1>Login</h1>
           <form>
             <div class="input-container">
               <label for="username">Username</label>
-              <input type="text" id="username" placeholder="Enter username"/>
+              <input type="text" id="loginUsername" placeholder="Enter username"/>
             </div>
             <div class="input-container">
               <label for="password">Password</label>
-              <input type="password" id="password" placeholder="Enter Password" />
+              <input type="password" id="loginPassword" placeholder="Enter Password" />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" id="login-button">Login</button>
           </form>
         </div>
-        <div class="ask-account">
+
+        <div class="registration-section">
+          <h1>Register</h1>
+          <form>
+            <div class="input-container">
+              <label for="username">Username</label>
+              <input type="text" id="registerUsername" placeholder="Enter username"/>
+            </div>
+            <div class="input-container">
+              <label for="password">Password</label>
+              <input type="password" id="registerPpassword" placeholder="Enter Password" />
+            </div>
+            <button type="submit" id="register-button">Register</button>
+          </form>
+        </div>
+
+        <div class="ask-account" style="display: none;">
           <p>Don't have an account?</p>
           <a href="./register.html">Register</a>
+        </div>
+
+        <div class="ask-login">
+          <p>Already have an account?</p>
+          <a href="./login.html">Login</a>
         </div>
       </div>
     </main>
@@ -38,6 +60,7 @@
     <footer></footer>
 
     <script type="module" src="./js/script.js"></script>
+    <script type="module" src="./js/login/login.js"></script>
   </body>
 </html>
 <!-- 
