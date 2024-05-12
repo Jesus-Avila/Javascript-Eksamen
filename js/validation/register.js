@@ -45,26 +45,26 @@ export const checkIfUserExist = async (username) => {
     }
 }
 
-// If user is already in database, alert user that they are already registered
-export const userExists = (username) => {
-    checkIfUserExist(username).then(user => {
-        if (user) {
-            alert('User already exists');
-        }
-    })
-    alert('User already exists');
-}
+// // If user is already in database, alert user that they are already registered
+// export const userExists = (username) => {
+//     checkIfUserExist(username).then(user => {
+//         if (user) {
+//             alert('User already exists');
+//         }
+//     })
+//     alert('User already exists');
+// }
 
 
-// If user is not in database, alert user that they have been registered
-export const userRegistered = (username) => {
-    checkIfUserExist(username).then(user => {
-        if (!user) {
-            alert('User registered');
-        }
-    })
-    alert('User registered');
-}
+// // If user is not in database, alert user that they have been registered
+// export const userRegistered = (username) => {
+//     checkIfUserExist(username).then(user => {
+//         if (!user) {
+//             alert('User registered');
+//         }
+//     })
+//     alert('User registered');
+// }
 
 // Post request to database to save user in database
 export const postRequest = async (data) => {
@@ -76,7 +76,7 @@ export const postRequest = async (data) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + key,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify([data]),
         }).then(response => {
             if (response.ok) {
                 return response.json();
@@ -99,22 +99,40 @@ export const toggleForm = () => {
 
 
 // Event listener for register button
-    const button = document.querySelector('#register-button');
-    button.addEventListener('click', async (e) => {
+const button = document.querySelector('#register-button');
+// button.disabled = true;
+
+button.addEventListener('click', async (e) => {
+
         e.preventDefault();
         console.log('Register Form Button clicked');
+
+        
+        // Get user input
         const data = getUserInput();
+        // Check if user input is empty
         if (!data.username || !data.password) {
             alert('Please fill in all fields');
             return;
         }
+        // Check if user is over 18 from checkbox in the form
+        const checkbox = document.querySelector('#ageVerification');
+           if (!checkbox.checked) {
+             alert('You must be over 18 to register');
+             return;
+           }
+        // Check if user exists
         const user = await checkIfUserExist(data.username);
         console.log(data);
+        // If user exists, alert user that they are already registered, else alert user that they have been registered
         if (user) {
             alert('Registration failed');
         } else {
             alert('User registered');
-            postRequest([data]);
+            postRequest(data);
             toggleForm();
         }
-    });
+});
+
+
+ 
