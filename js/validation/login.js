@@ -122,6 +122,7 @@ export const clearSessionStorage = () => {
 document.addEventListener('DOMContentLoaded', () => {
     pageState();
     loginButton();
+    clearSessionStorage();
 })
 
 // Function to toggle between login and registration sections

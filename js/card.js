@@ -1,4 +1,3 @@
-// import { postRequest, deleteRequest, checkIfCocktailIsInDatabase } from "./fetch.js";
 import { createAddDeleteButton } from "./buttons.js";
 
 const cocktailsList = document.querySelector('.cocktail-list');

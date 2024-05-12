@@ -1,6 +1,6 @@
-
 import { cocktailCard } from './card.js';
 import { fetchTenRandomCocktails } from './fetch.js';
+import { mainUser } from './user/user.js';
 
 let cocktailsArray;
 
@@ -11,4 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
             cocktailCard(cocktail);
         });
     });
+    mainUser();
 }); 
