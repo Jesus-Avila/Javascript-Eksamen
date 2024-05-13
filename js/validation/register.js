@@ -52,28 +52,6 @@ export const postRequest = async (data) => {
   }
 };
 
-// Create a "user-_uuid" endpoint in CRUDAPI
-const createUserEndpoint = async (userUUID) => {
-  const userEndpoint = `https://crudapi.co.uk/api/v1/user-${userUUID}`;
-  console.log("User endpoint received in createUserEndpoint function", userEndpoint);
-  try {
-    const response = await fetch(userEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + key,
-      },
-      body: JSON.stringify([{}]),
-    });
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    console.log("User endpoint created successfully", response);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // Get UUID from user object using username
 export const getUuid = async (username) => {
   const users = await getUsers();
@@ -126,9 +104,6 @@ button.addEventListener("click", async (e) => {
     // Make POST request to add user to database
     await postRequest(data);
     alert("User registered");
-    // Create a "user-_uuid" endpoint in CRUDAPI
-    const userUuid = await getUuid(data.username);
-    await createUserEndpoint(userUuid);
     // Reload the page to go back to login form
     toggleForm();
   }
