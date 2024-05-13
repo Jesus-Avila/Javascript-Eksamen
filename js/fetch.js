@@ -73,10 +73,11 @@ export const postRequest = async (data, uuid) => {
 };
 
 // Delete request to remove a cocktail from the database
-export const deleteRequest = async (id) => {
-    const uuid = await fetchUUID(id);
+export const deleteRequest = async (id, uuid) => {
+    const drinkUUID = await fetchUUID(id, uuid);
+    const link = `https://crudapi.co.uk/api/v1/user-${uuid}`;
     try {
-        const response = await fetch(`${url}/${uuid}`, {
+        const response = await fetch(`${link}/${drinkUUID}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,8 +126,9 @@ const findCocktail = async (cocktailList, idDrink) => {
 }
 
 // Fetch uuid of specific cocktail in the database by its idDrink
-const fetchUUID = async (id) => {
-    const cocktailList = await fetchAllCocktails();
+const fetchUUID = async (id, userUUID) => {
+    const cocktailList = await fetchAllCocktails(userUUID);
+    console.log('fetchUUID', cocktailList, id);
     const cocktail = await findCocktail(cocktailList, id);
     if (!cocktail) {
         console.log(`Cocktail with id ${id} not found in database`);

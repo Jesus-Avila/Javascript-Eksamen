@@ -51,7 +51,7 @@ export const createAddDeleteButton = async (cocktail) => {
       await postRequest(cocktail, uuid);
     } else {
       favoriteButton.textContent = "+ ADD";
-      await deleteRequest(cocktail.idDrink);
+      await deleteRequest(cocktail.idDrink, uuid);
     }
   });
 
