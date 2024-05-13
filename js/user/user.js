@@ -15,7 +15,6 @@ const userInSessionStorage = () => {
 // Get user uuid from session storage
 const getUuid = () => {
     const user = userInSessionStorage();
-    console.log("User's UUID", user._uuid);
     return user._uuid;
 }
 
@@ -42,5 +41,6 @@ const pageState = async () => {
 
 // Main function to run on page load
 export const mainUser = async () => {
-    getUuid();
+    const userUUID = await getUuid();
+    return userUUID;
 }

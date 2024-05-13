@@ -49,28 +49,27 @@ export const fetchSpecificCocktail = async (id) => {
 const url = 'https://crudapi.co.uk/api/v1/cocktails';
 const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
 
-export const postRequest = async (data) => {
-fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'BEARER ' + key
-        },
-        body: JSON.stringify([data])
-    })
-    .then(response => {
+export const postRequest = async (data, uuid) => {
+    const link = 'https://crudapi.co.uk/api/v1/user-';
+    try {
+        const response = await fetch(`${link}${uuid}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'BEARER ' + key
+            },
+            body: JSON.stringify([data])
+        });
         if (response.ok) {
-            return response.json();
+            const responseData = await response.json();
+            console.log('Cocktail added successfully:', responseData);
+            return responseData;
         } else {
             throw new Error('Failed to add data');
         }
-    })
-    .then(data => {
-        console.log('Cocktail added successfully:', data);
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error adding data:', error);
-    })
+    }
 };
 
 // Delete request to remove a cocktail from the database
@@ -96,9 +95,10 @@ export const deleteRequest = async (id) => {
 
 
 // Get request to retrieve all cocktails from the database
-export const fetchAllCocktails = async () => {
+export const fetchAllCocktails = async (uuid) => {
+    const userEndpoint = 'https://crudapi.co.uk/api/v1/user-';
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${userEndpoint}${uuid}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -110,6 +110,7 @@ export const fetchAllCocktails = async () => {
         }
         
         const responseData = await response.json();
+        console.log("fetchAllCocktails", responseData.items);
         return responseData.items;
     } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
@@ -135,8 +136,8 @@ const fetchUUID = async (id) => {
 }
 
 // Check if cocktail is in database
-export const checkIfCocktailIsInDatabase = async (cocktail) => {
-    const cocktailList = await fetchAllCocktails();
+export const checkIfCocktailIsInDatabase = async (cocktail, uuid) => {
+    const cocktailList = await fetchAllCocktails(uuid);
     return cocktailList.some(item => item.idDrink === cocktail.idDrink);
 }
 

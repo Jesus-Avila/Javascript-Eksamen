@@ -3,17 +3,8 @@ import { createAddDeleteButton } from "./buttons.js";
 const cocktailsList = document.querySelector('.cocktail-list');
 
 
-// Get favorites list from local storage
-export const getFavoritesList = () => {
-    const cocktailsInList = JSON.parse(localStorage.getItem('savedCocktails')) || [];
-    return cocktailsInList;
-}
+// Handle initial endpoint creation
 
-// Check if cocktail is in favorites list
-export const checkIfCocktailIsFavorite = (cocktail) => {
-    let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
-    return savedCocktails.some(item => item.idDrink === cocktail.idDrink);
-}
 
 
 // Create index card for each cocktail
@@ -83,7 +74,7 @@ export const cocktailCard = async (cocktail) => {
     textDiv.appendChild(infoDiv);
     
     
-    
+    // Create and Append Add to favorites button to Text Div
     const button = await createAddDeleteButton(cocktail);
     textDiv.appendChild(button);
     
@@ -104,60 +95,3 @@ export const cocktailCard = async (cocktail) => {
         window.location.href = `/cocktail.html?id=${cocktail.idDrink}`;
     });
 }
-
-
-
-// function saveCocktailToLocalStorage(cocktail) {
-//     let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails')) || [];
-//     savedCocktails.push(cocktail);
-//     localStorage.setItem('savedCocktails', JSON.stringify(savedCocktails));
-// }
-
-// function removeCocktailFromLocalStorage(cocktail) {
-//     let savedCocktails = JSON.parse(localStorage.getItem('savedCocktails'));
-//     let updatedCocktails = savedCocktails.filter(item => item.idDrink !== cocktail.idDrink);
-//     localStorage.setItem('savedCocktails', JSON.stringify(updatedCocktails));
-// }
-
-// // Change button text to remove from favorites
-// const changeButtonText = (button, cocktail) => {
-//     return !checkIfCocktailIsInDatabase(cocktail) ? button.textContent = '- REMOVE' : button.textContent = '+ ADD';
-// }
-
-// // Create and Append Add to favorites button to Text Div
-// const favoriteButton = document.createElement('button');
-// changeButtonText(favoriteButton, cocktail);
-// favoriteButton.style.cssText = `
-// background-color: #e3cb90;
-// color: #013b45;
-// padding: 10px 20px;
-// border: none;
-// cursor: pointer;
-// width: 70%;
-// align-self: center;
-// margin-top: 20px;`;
-
-// favoriteButton.classList.add('favorite-button');
-// favoriteButton.addEventListener('mouseover', () => {
-//     favoriteButton.style.backgroundColor = '#f2a154';
-// });
-// favoriteButton.addEventListener('mouseout', () => {
-//     favoriteButton.style.backgroundColor = '#e3cb90';
-// });
-
-// // Add to favorites button functionality
-// favoriteButton.addEventListener('click', (event) => {
-//     if (!checkIfCocktailIsFavorite(cocktail)) {
-//         saveCocktailToLocalStorage(cocktail);
-//         postRequest(cocktail);
-//         favoriteButton.textContent = '- REMOVE';
-//     } else {
-//         removeCocktailFromLocalStorage(cocktail);
-//         deleteRequest(cocktail.idDrink);
-//         favoriteButton.textContent = '+ ADD';
-//     }
-//     event.stopPropagation();
-// });
-
-// // Append Button to Text Div
-// textDiv.appendChild(favoriteButton);
