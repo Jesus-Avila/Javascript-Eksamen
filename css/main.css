@@ -58,7 +58,7 @@
       justify-content: center;
       gap: 50px;
       background-color: var(--mygrey);
-      padding: 50px;
+      padding: 50px 50px 20px 50px;
   }
   
   .cocktail-card {
@@ -105,3 +105,18 @@
     margin-top: 20px;
   }
   
+  .load-more-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: var(--mygrey);
+  }
+
+  .load-more-container button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }

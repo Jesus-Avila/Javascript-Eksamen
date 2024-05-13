@@ -12,7 +12,6 @@ export const fetchRandomCocktail = async () => {
             Object.entries(randomCocktail).filter(([key, value]) => value !== null)
         );
 
-        console.log('fetch random cocktail', randomCocktail);
         return randomCocktail;
     } catch (error) {
         console.log(error);
