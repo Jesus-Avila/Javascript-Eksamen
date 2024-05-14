@@ -1,4 +1,4 @@
-
+import { fetchAllUserCreatedCocktails } from './user/user-recipes.js';
 
 // crudapi key for cocktails pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ
 
@@ -98,6 +98,9 @@ const fetchUUID = async (id, userUUID) => {
 // Check if cocktail is in database
 export const checkIfCocktailIsInDatabase = async (cocktail, uuid) => {
     const cocktailList = await fetchAllCocktails(uuid);
+    const recipeList = await fetchAllUserCreatedCocktails(uuid);
+    cocktailList.push(...recipeList);
+    console.log('checking checking', cocktailList);
     return cocktailList.some(item => item.idDrink === cocktail.idDrink);
 }
 
