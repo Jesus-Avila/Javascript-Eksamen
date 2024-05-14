@@ -1,17 +1,8 @@
 import { cocktailCard } from "./card.js";
-import { fetchTenRandomCocktails, fetchRandomCocktail } from "./api.js";
+import { fetchTenRandomCocktails } from "./api.js";
 
 let cocktailsArray = [];
 
-// const fetchCocktailsByFilter = async (filter) => {
-//   try {
-//     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?${filter}`);
-//     const data = await response.json();
-//     return data.drinks;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 
 // Fetch 10 more random cocktails
 // Append the new cocktails cocktail-list in the DOM
@@ -49,49 +40,14 @@ filterButtons.forEach((button) => {
         const filter = button.textContent;
         let filteredCocktails = [];
         console.log("Filter button clicked", filter);
-        console.log('array of arrays', cocktailsArray);
+        let array = JSON.parse(sessionStorage.getItem("cocktails"));
+        // Filter cocktails from sessionStorage and update the cocktail list
+        filteredCocktails = array.filter((cocktail) => cocktail.strCategory === filter);
+        console.log('array of arrays', filteredCocktails);
         // filteredCocktails = await fetchTenCocktailsByCategory(filter);
-        // updateCocktailList(filteredCocktails);
+        updateCocktailList(filteredCocktails);
     });
 })
-
-// Fetch cocktails by category
-// const fetchCocktailsByCategory = async (filter) => {
-//     const link = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?";
-//     try {
-//       const response = await fetch(`${link}${filter}`);
-//       const data = await response.json();
-//       return data.drinks;
-//     } catch (error) {
-//       console.error(error);
-//       return [];
-//     }
-//   };
-
-  // Fetch cocktails by category making a function that fetches cocktails and looks through its properties if specific category is found and returns the cocktail, else returns nothing
-  const fetchByCategory = async (category) => {
-    const cocktail = await fetchRandomCocktail();
-    if (cocktail.strCategory === category) {
-      return cocktail;
-    } else {
-        return;
-    }
-  }
-
-  // While the length of the array is less than 10, keep fetching cocktails by category until 10 cocktails are found
-    const fetchTenCocktailsByCategory = async (category) => {
-        cocktailsArray = [];
-        while (cocktailsArray.length < 10) {
-            const cocktail = await fetchByCategory(category);
-            if (cocktail) {
-                cocktailsArray.push(cocktail);
-            } else {
-
-            }
-                
-        }
-    }
-
 
 // Update cocktail list in the DOM
 const updateCocktailList = (cocktails) => {
