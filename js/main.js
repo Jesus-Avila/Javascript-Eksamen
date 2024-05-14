@@ -37,9 +37,6 @@ const fetchTenCocktailsByCategory = async (category) => {
       cocktails.push(cocktail);
     }
     requestCounter++;
-    // if (cocktails.length >= 10 && cocktails.every((cocktail) => cocktail.strCategory !== category)) {
-    //   break;
-    // }
   }
   return cocktails;
 };
@@ -56,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-// All filter button
+// "All" filter button
 const allButton = document.querySelector("#all-cocktails-filter");
 allButton.addEventListener("click", async () => {
   console.log("All cocktails button clicked");
