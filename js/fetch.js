@@ -77,7 +77,7 @@ export const fetchAllCocktails = async (uuid) => {
 };
 
 // Find uuid of specific cocktail in the database by its idDrink, RETURNS cocktail object matching the idDrink
-const findCocktail = async (cocktailList, idDrink) => {
+export const findCocktail = async (cocktailList, idDrink) => {
     const data = cocktailList;
     const cocktail = data.find(item => item.idDrink == idDrink);
     return cocktail;
@@ -101,28 +101,6 @@ export const checkIfCocktailIsInDatabase = async (cocktail, uuid) => {
     return cocktailList.some(item => item.idDrink === cocktail.idDrink);
 }
 
-// Get request to retrieve a specific cocktail from the database using its ID 
-// const getSpecificRequest = async (id) => {
-//     try {
-//         const cocktailList = await fetchAllCocktails();
-        
-//         const response = await fetch(`${url}/${id}`, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Authorization": "Bearer " + key,
-//             },
-//         });
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-        
-//         const responseData = await response.json();
-//         console.log("GET from Crud API", responseData.items);
-//         return responseData;
-//     } catch (error) {
-//         console.error("There was a problem with the fetch operation:", error);
-//     }
-// };
+
 
 

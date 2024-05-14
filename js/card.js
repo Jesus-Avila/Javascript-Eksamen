@@ -3,7 +3,6 @@ import { createAddDeleteButton } from "./buttons.js";
 const cocktailsList = document.querySelector('.cocktail-list');
 
 
-// Handle initial endpoint creation
 
 
 

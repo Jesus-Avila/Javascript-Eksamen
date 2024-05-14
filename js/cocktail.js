@@ -1,5 +1,6 @@
 import { fetchSpecificCocktail } from './api.js';
 import { createAddDeleteButton } from './buttons.js';
+import { fetchSpecificUserCreatedCocktail } from './user/user-recipes.js';
 
 
 // Get the cocktail data from the API using the ID
@@ -8,13 +9,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const cocktailID = parseInt(urlParams.get('id'));
-    
-    const cocktail = await fetchSpecificCocktail(cocktailID);
+    const cocktailIDString = cocktailID.toString();
+    const cocktailIDLength = cocktailIDString.length;
+
+    // Handle the case where the cocktail is from the user's created recipes
+    let cocktail;
+    if (cocktailIDLength < 8) {
+        console.log('Specific cocktail fetched from API', cocktail);
+        cocktail = await fetchSpecificCocktail(cocktailID);
+    } else {
+        console.log('Specific user created cocktail fetched from API', cocktail);
+        cocktail = await fetchSpecificUserCreatedCocktail(cocktailID);
+    }
     changeCocktailInfo(cocktail);
 })
 
 // Change information on the page based on the cocktail data
 const changeCocktailInfo = async (cocktail) => {
+    console.log('cocktail', cocktail);
     // Get the elements from the HTML
     const cocktailName = document.querySelector('#cocktail-name');
     const cocktailGlass = document.querySelector('#glass-type');
@@ -47,10 +59,11 @@ const changeCocktailInfo = async (cocktail) => {
         cocktailIngredients.appendChild(li);
     });
 
-    // Change the image of the cocktail
-    if (cocktail.strDrinkThumb === null) {
-        cocktail.strDrinkThumb = '../assets/image-not-available.jpeg';
-    } 
+    // Change the image of the cocktail if there is no strDrinkThumb in the object
+    // if (!cocktail.strDrinkThumb) {
+    //     cocktail.strDrinkThumb = 'https://via.placeholder.com/300';
+    // }
+
     const cocktailImage = document.createElement('img');
     cocktailImage.src = cocktail.strDrinkThumb;
     cocktailImage.alt = cocktail.strDrink;
