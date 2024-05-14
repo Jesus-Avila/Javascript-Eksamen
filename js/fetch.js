@@ -102,27 +102,27 @@ export const checkIfCocktailIsInDatabase = async (cocktail, uuid) => {
 }
 
 // Get request to retrieve a specific cocktail from the database using its ID 
-const getSpecificRequest = async (id) => {
-    try {
-        const cocktailList = await fetchAllCocktails();
+// const getSpecificRequest = async (id) => {
+//     try {
+//         const cocktailList = await fetchAllCocktails();
         
-        const response = await fetch(`${url}/${id}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + key,
-            },
-        });
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
+//         const response = await fetch(`${url}/${id}`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Authorization": "Bearer " + key,
+//             },
+//         });
+//         if (!response.ok) {
+//             throw new Error("Network response was not ok");
+//         }
         
-        const responseData = await response.json();
-        console.log("GET from Crud API", responseData.items);
-        return responseData;
-    } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-    }
-};
+//         const responseData = await response.json();
+//         console.log("GET from Crud API", responseData.items);
+//         return responseData;
+//     } catch (error) {
+//         console.error("There was a problem with the fetch operation:", error);
+//     }
+// };
 
 

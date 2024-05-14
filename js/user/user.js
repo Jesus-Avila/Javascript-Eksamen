@@ -13,7 +13,7 @@ const userInSessionStorage = () => {
 };
 
 // Get user uuid from session storage
-const getUuid = () => {
+export const getUuid = () => {
     const user = userInSessionStorage();
     return user._uuid;
 }

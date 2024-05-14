@@ -27,25 +27,25 @@
       <form id="cocktailForm">
         <div>
           <label for="cocktailName">Cocktail Name:</label>
-          <input type="text" id="cocktailName" name="cocktailName" placeholder="Name" required /><br /><br />
+          <input type="text" id="cocktailName" name="strDrink" placeholder="Name" required /><br /><br />
         </div>
 
         <div>
           <label for="cocktailGlass">Cocktail Glass:</label>
-          <input type="text" id="cocktailGlass" name="cocktailGlass" placeholder="Glass" required /><br /><br />
+          <input type="text" id="cocktailGlass" name="strGlass" placeholder="Glass" required /><br /><br />
         </div>
 
         <div>
           <label for="cocktailCategory">Cocktail Category:</label>
-          <input type="text" id="cocktailCategory" name="cocktailCategory" placeholder="Category" required /><br /><br />
+          <input type="text" id="cocktailCategory" name="strCategory" placeholder="Category" required /><br /><br />
         </div>
 
         <div>
             <h2>Ingredients:</h2>
-            <input type="text" name="ingredient" placeholder="Ingredient" required /><br /><br />
+            <input type="text" name="ingredient" placeholder="Ingredient" id="ingredientInput" /><br /><br />
             <button type="button" class="add-button" id="addIngredient">Add Ingredient</button><br /><br />
-            <div id="ingredientList">
-                <ul>
+            <div id="ingredientListContainer">
+                <ul id="ingredientList">
                 </ul>
             </div>
         </div>

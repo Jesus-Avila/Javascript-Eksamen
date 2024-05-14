@@ -23,9 +23,11 @@ const changeCocktailInfo = async (cocktail) => {
     const cocktailInstructions = document.querySelector('.cocktail-instructions-text');
     const buttonContainer = document.querySelector('.button-container');
 
+
     // Change the text content of the elements
     cocktailName.textContent = cocktail.strDrink;
     cocktailGlass.textContent = cocktail.strGlass;
+
 
     // Create an array of ingredients and measurements
     const ingredients = [];
@@ -33,7 +35,8 @@ const changeCocktailInfo = async (cocktail) => {
         const ingredient = cocktail[`strIngredient${i}`];
         const measurement = cocktail[`strMeasure${i}`];
         if (ingredient) {
-            ingredients.push(`${measurement}${ingredient}`);
+            const ingredientText = measurement ? `${ingredient}${measurement}` : ingredient;
+            ingredients.push(ingredientText);
         }
     }
 
@@ -45,6 +48,9 @@ const changeCocktailInfo = async (cocktail) => {
     });
 
     // Change the image of the cocktail
+    if (cocktail.strDrinkThumb === null) {
+        cocktail.strDrinkThumb = '../assets/image-not-available.jpeg';
+    } 
     const cocktailImage = document.createElement('img');
     cocktailImage.src = cocktail.strDrinkThumb;
     cocktailImage.alt = cocktail.strDrink;
