@@ -1,4 +1,4 @@
-import { fetchSpecificCocktail } from './fetch.js';
+import { fetchSpecificCocktail } from './api.js';
 import { createAddDeleteButton } from './buttons.js';
 
 

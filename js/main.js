@@ -1,5 +1,5 @@
 import { cocktailCard } from './card.js';
-import { fetchTenRandomCocktails } from './fetch.js';
+import { fetchTenRandomCocktails } from './api.js';
 
 let cocktailsArray = [];
 
