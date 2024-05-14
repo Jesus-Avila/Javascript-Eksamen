@@ -8,15 +8,8 @@ const changeButtonText = async (button, cocktail, uuid) => {
     return result;
 };
 
-// // Get user from the session storage
-// const getUser = () => {
-//     const data = sessionStorage.getItem("user");
-//     const user = JSON.parse(data);
-//     return user;
-// };
-
+  // COCKTAIL CARD BUTTON
 // Create and Append Add to favorites button to Text Div
-
 export const createAddDeleteButton = async (cocktail) => {
   const uuid = await mainUser();
   // Create button

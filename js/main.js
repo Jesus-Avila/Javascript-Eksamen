@@ -23,21 +23,23 @@ const fetchMoreCocktails = async () => {
   newArray.forEach((cocktail) => {
     cocktailCard(cocktail);
   });
-  //   });
 };
 
 // Fetch 10 random cocktails and return them until the array has 10 cocktails in it and they are of specific category
 const fetchTenCocktailsByCategory = async (category) => {
   const cocktails = [];
-  while (cocktails.length < 10) {
+  let requestCounter = 0;
+  const maxRequests = 60;
+  while (cocktails.length < 10  && requestCounter < maxRequests) {
     const cocktail = await fetchRandomCocktail();
     if (cocktail.strCategory === category) {
       // Save cocktail in cocktails array
       cocktails.push(cocktail);
     }
-    if (cocktails.length >= 10 && cocktails.every((cocktail) => cocktail.strCategory !== category)) {
-      break;
-    }
+    requestCounter++;
+    // if (cocktails.length >= 10 && cocktails.every((cocktail) => cocktail.strCategory !== category)) {
+    //   break;
+    // }
   }
   return cocktails;
 };
