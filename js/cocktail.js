@@ -11,29 +11,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cocktailID = parseInt(urlParams.get('id'));
     const cocktailIDString = cocktailID.toString();
     const cocktailIDLength = cocktailIDString.length;
-
+    
     // Handle the case where the cocktail is from the user's created recipes
     let cocktail;
     if (cocktailIDLength < 8) {
         console.log('Specific cocktail fetched from API', cocktail);
         cocktail = await fetchSpecificCocktail(cocktailID);
+        changeCocktailInfo(cocktail);
     } else {
         console.log('Specific user created cocktail fetched from API', cocktail);
         cocktail = await fetchSpecificUserCreatedCocktail(cocktailID);
+        addEditButton(cocktail);
+        changeCocktailInfo(cocktail);
     }
-    changeCocktailInfo(cocktail);
 })
+
+// Add edit button to the cocktail card
+const addEditButton = (cocktail) => {
+    const editButton = document.createElement('button');
+    editButton.textContent = 'EDIT';
+    editButton.classList.add('edit-button');
+    buttonContainer.appendChild(editButton);
+    editButton.addEventListener('click', () => {
+        window.location.href = `../myrecipe.html?id=${cocktail.idDrink}`
+    })
+}
+
+// Get the elements from the HTML
+const cocktailName = document.querySelector('#cocktail-name');
+const cocktailGlass = document.querySelector('#glass-type');
+const cocktailIngredients = document.querySelector('.cocktail-ingredients-list');
+const cocktailImageDiv = document.querySelector('.cocktail-image-container');
+const cocktailInstructions = document.querySelector('.cocktail-instructions-text');
+const buttonContainer = document.querySelector('.button-container');
 
 // Change information on the page based on the cocktail data
 const changeCocktailInfo = async (cocktail) => {
     console.log('cocktail', cocktail);
-    // Get the elements from the HTML
-    const cocktailName = document.querySelector('#cocktail-name');
-    const cocktailGlass = document.querySelector('#glass-type');
-    const cocktailIngredients = document.querySelector('.cocktail-ingredients-list');
-    const cocktailImageDiv = document.querySelector('.cocktail-image-container');
-    const cocktailInstructions = document.querySelector('.cocktail-instructions-text');
-    const buttonContainer = document.querySelector('.button-container');
 
 
     // Change the text content of the elements
@@ -59,10 +73,6 @@ const changeCocktailInfo = async (cocktail) => {
         cocktailIngredients.appendChild(li);
     });
 
-    // Change the image of the cocktail if there is no strDrinkThumb in the object
-    // if (!cocktail.strDrinkThumb) {
-    //     cocktail.strDrinkThumb = 'https://via.placeholder.com/300';
-    // }
 
     const cocktailImage = document.createElement('img');
     cocktailImage.src = cocktail.strDrinkThumb;

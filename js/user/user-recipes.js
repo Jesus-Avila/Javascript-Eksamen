@@ -8,13 +8,31 @@ const form = document.querySelector('#cocktailForm');
 let ingredientCounter = 1;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    addIngredientAndFormEventListeners();
+
+    const query = window.location.search;
+    const urlParams = new URLSearchParams(query);
+    const recipeId = urlParams.get('id');
+    if (recipeId) {
+        const recipe = await fetchSpecificUserCreatedCocktail(recipeId);
+        if (recipe) {
+            populateForm(recipe);
+        } else {
+            console.log('Recipe not found');
+        }
+    }
+});
+
+// Add event listener to add ingredient and form buttons
+const addIngredientAndFormEventListeners = () => {
     if (addIngredientButton && form){
         addEventLstenerToAddIngredientButton();
         addEventLstenerToForm();
-    } else {
+    }
+    else {
         console.log('addIngredientButton or Form not found in the DOM');
     }
-});
+}
 
 // Add ingredient to ul list
 // Add event listener to add ingredient button
@@ -81,6 +99,9 @@ const addEventLstenerToForm = () => {
     });
 }
 
+
+const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
+
 // Post request to database to save user-create cocktail in database
 // Creating a new endpoint for "user-created-cocktails" at user-${userUUID}-recipes
 const postRequestRecipe = async (data) => {
@@ -111,12 +132,12 @@ const postRequestRecipe = async (data) => {
     }
 }
 
-const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
+
 
 // Get request to retrieve all user-created cocktails from the database
 export const fetchAllUserCreatedCocktails = async (uuid) => {
     const userEndpoint = 'https://crudapi.co.uk/api/v1/user-';
-    // const userUUID = await getUuid();
+    const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
     try {
         const response = await fetch(`${userEndpoint}${uuid}-recipes`, {
             method: "GET",
@@ -132,7 +153,7 @@ export const fetchAllUserCreatedCocktails = async (uuid) => {
         console.log("fetchAllUserCreatedCocktails", responseData.items);
         return responseData.items;
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("There was a problem with the fetch operation:", error);
     }
 }
 
@@ -163,7 +184,7 @@ export const fetchSpecificUserCreatedCocktail = async (idDrink) => {
 }
 
 
-// Fetch uuid of the drink
+// Fetch uuid of the user created cocktail
 const fetchUUID = async (idDrink, uuid) => {
     const cocktialsList = await fetchAllUserCreatedCocktails(uuid);
     console.log('user created cocktails and idDrink', cocktialsList, idDrink);

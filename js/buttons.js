@@ -50,3 +50,4 @@ export const createAddDeleteButton = async (cocktail) => {
 
   return favoriteButton;
 };
+

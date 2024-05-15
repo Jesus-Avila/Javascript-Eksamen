@@ -100,3 +100,26 @@ h1 {
 }
 
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.edit-button {
+    background-color: #e3cb90;
+    color: #013b45;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 70%;
+    align-self: center;
+    margin-top: 20px;
+    max-width: 300px;
+}
+
+.edit-button:hover {
+    background-color: #f2a154;
+}
+
