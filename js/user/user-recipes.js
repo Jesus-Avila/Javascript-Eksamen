@@ -114,8 +114,20 @@ const addEventLstenerToForm = () => {
         ingredientList.innerHTML = '';
         ingredientCounter = 1;
 
-        // Post the cocktail data to the database
-        await postRequestRecipe(cocktailData);
+        // Check if the user is editing a recipe
+        const query = window.location.search;
+        const urlParams = new URLSearchParams(query);
+        const recipeId = urlParams.get('id');
+        if (recipeId) {
+            // Put the cocktail data to the database
+            await putRequestRecipe(cocktailData, recipeId);
+        } else {
+            // Post the cocktail data to the database
+            await postRequestRecipe(cocktailData);
+        }
+
+        // // Post the cocktail data to the database
+        // await postRequestRecipe(cocktailData);
         
         // Send user to mypage
         window.location.href = "mypage.html";
@@ -155,6 +167,31 @@ const postRequestRecipe = async (data) => {
     }
 }
 
+// Put request to update user-created cocktail in the database
+const putRequestRecipe = async (data, idDrink) => {
+    const userUUID = await getUuid();
+    const drinkUUID = await fetchUUID(idDrink, userUUID);
+    const link = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes/${drinkUUID}`;
+    try {
+        const response = await fetch(link, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+            body: JSON.stringify(data),
+        });
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log("Cocktail recipe updated successfully:", responseData);
+            return responseData;
+        } else {
+            throw new Error("Failed to update data");
+        }
+    } catch (error) {
+        console.error("Error updating data:", error);
+    }
+}
 
 
 // Get request to retrieve all user-created cocktails from the database
