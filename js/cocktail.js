@@ -47,7 +47,7 @@ const changeCocktailInfo = async (cocktail) => {
         const ingredient = cocktail[`strIngredient${i}`];
         const measurement = cocktail[`strMeasure${i}`];
         if (ingredient) {
-            const ingredientText = measurement ? `${ingredient}${measurement}` : ingredient;
+            const ingredientText = measurement ? `${ingredient} - ${measurement}` : ingredient;
             ingredients.push(ingredientText);
         }
     }
