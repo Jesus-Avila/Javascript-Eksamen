@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(query);
     const recipeId = urlParams.get('id');
     if (recipeId) {
+        console.log('Recipe ID:', recipeId);
         const recipe = await fetchSpecificUserCreatedCocktail(recipeId);
+        console.log('Recipe:', recipe);
         if (recipe) {
             populateForm(recipe);
         } else {
@@ -22,6 +24,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
+
+// Populate form with data from the recipe if the user is editing a recipe
+const populateForm = (recipe) => {
+    const nameInput = document.querySelector('#cocktailName');
+    const categoryInput = document.querySelector('#cocktailCategory');
+    const glassInput = document.querySelector('#cocktailGlass');
+    const instructionsInput = document.querySelector('#instruction');
+
+    nameInput.value = recipe.strDrink;
+    categoryInput.value = recipe.strCategory;
+    glassInput.value = recipe.strGlass;
+    instructionsInput.value = recipe.strInstructions;
+
+    // Populate ingredients
+    const ingredients = recipe.ingredients;
+    ingredients.forEach((ingredient) => {
+        const li = document.createElement('li');
+        li.textContent = ingredient;
+        ingredientList.appendChild(li);
+    });
+}
 
 // Add event listener to add ingredient and form buttons
 const addIngredientAndFormEventListeners = () => {
