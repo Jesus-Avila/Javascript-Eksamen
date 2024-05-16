@@ -46,6 +46,8 @@ const populateForm = (recipe) => {
     ingredients.forEach((ingredient) => {
         const li = document.createElement('li');
         li.textContent = ingredient;
+        const deleteButton = createDeleteIngredientButton();
+        li.appendChild(deleteButton);
         ingredientList.appendChild(li);
     });
 }
@@ -76,7 +78,7 @@ const addEventLstenerToAddIngredientButton = () => {
             const deleteButton = createDeleteIngredientButton();
             li.appendChild(deleteButton);
             ingredientList.appendChild(li);
-            // ingredientInput.value = '';
+            ingredientInput.value = '';
         }
 
     });
@@ -86,11 +88,14 @@ const addEventLstenerToAddIngredientButton = () => {
 // Create delete ingredient button
 const createDeleteIngredientButton = () => {
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
+    deleteButton.textContent = 'X';
     deleteButton.classList.add('delete-ingredient-button');
     deleteButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const li = e.target.parentElement;
         ingredientList.removeChild(li);
     });
+    return deleteButton;
 }
 
 // Submit form to create a new cocktail
@@ -112,7 +117,7 @@ const addEventLstenerToForm = () => {
         const ingredients = [];
         const ingredientItems = ingredientList.querySelectorAll('li');
         ingredientItems.forEach((item) => {
-            const ingredientName = item.textContent;
+            const ingredientName = item.firstChild.textContent;
             const ingredientKey  = `strIngredient${ingredientCounter++}`;
             cocktailData[ingredientKey] = ingredientName;
             ingredients.push(ingredientName);
@@ -141,9 +146,6 @@ const addEventLstenerToForm = () => {
             // Post the cocktail data to the database
             await postRequestRecipe(cocktailData);
         }
-
-        // // Post the cocktail data to the database
-        // await postRequestRecipe(cocktailData);
         
         // Send user to mypage
         window.location.href = "mypage.html";
@@ -208,6 +210,28 @@ const putRequestRecipe = async (data, idDrink) => {
         console.error("Error updating data:", error);
     }
 }
+
+// Delete request to remove a user-created cocktail from the database
+// export const deleteRequestRecipe = async (idDrink) => {
+//     const userUUID = await getUuid();
+//     const drinkUUID = await fetchUUID(idDrink, userUUID);
+//     const link = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes/${drinkUUID}`;
+//     try {
+//         const response = await fetch(link, {
+//             method: "DELETE",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Authorization": "Bearer " + key,
+//             },
+//         });
+//         if (!response.ok) {
+//             throw new Error("Network response was not ok");
+//         }
+//         console.log("Cocktail deleted successfully");
+//     } catch (error) {
+//         console.error("There was a problem", error);
+//     }
+// }
 
 
 // Get request to retrieve all user-created cocktails from the database

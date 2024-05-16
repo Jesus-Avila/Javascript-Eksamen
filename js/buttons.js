@@ -8,10 +8,17 @@ const changeButtonText = async (button, cocktail, uuid) => {
     return result;
 };
 
+
+
   // COCKTAIL CARD BUTTON
 // Create and Append Add to favorites button to Text Div
 export const createAddDeleteButton = async (cocktail) => {
   const uuid = await mainUser();
+  //Is cocktail user created?
+  const isUserCreated = (cocktail) => {
+    return cocktail.idDrink.length > 8;
+  };
+
   // Create button
   const favoriteButton = document.createElement("button");
   changeButtonText(favoriteButton, cocktail, uuid);

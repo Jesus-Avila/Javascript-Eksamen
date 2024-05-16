@@ -2,6 +2,7 @@ import { fetchSpecificCocktail } from './api.js';
 import { createAddDeleteButton } from './buttons.js';
 import { fetchSpecificUserCreatedCocktail } from './user/user-recipes.js';
 
+let cocktailIDLength;
 
 // Get the cocktail data from the API using the ID
 document.addEventListener('DOMContentLoaded', async () => {
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(queryString);
     const cocktailID = parseInt(urlParams.get('id'));
     const cocktailIDString = cocktailID.toString();
-    const cocktailIDLength = cocktailIDString.length;
+    cocktailIDLength = cocktailIDString.length;
     
     // Handle the case where the cocktail is from the user's created recipes
     let cocktail;
