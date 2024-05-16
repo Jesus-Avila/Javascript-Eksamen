@@ -38,7 +38,8 @@ const fetchTenCocktailsByCategory = async (category) => {
     }
     requestCounter++;
   }
-  return cocktails;
+  console.log('Cocktails found by category', cocktails);
+  return (cocktails);
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -78,7 +79,8 @@ filterButtons.forEach((button) => {
     let array = JSON.parse(sessionStorage.getItem("cocktails"));
 
     if (selectedFilter === "All") {
-      updateCocktailList(array);
+      selectedFilter = null;
+      updateCocktailList(cocktails);
     } else {
       filteredCocktails = array.filter((cocktail) => cocktail.strCategory === filter);
       console.log("array of arrays", filteredCocktails);

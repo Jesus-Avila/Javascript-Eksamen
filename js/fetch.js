@@ -100,7 +100,6 @@ export const checkIfCocktailIsInDatabase = async (cocktail, uuid) => {
     const cocktailList = await fetchAllCocktails(uuid);
     const recipeList = await fetchAllUserCreatedCocktails(uuid);
     cocktailList.push(...recipeList);
-    console.log('checking checking', cocktailList);
     return cocktailList.some(item => item.idDrink === cocktail.idDrink);
 }
 

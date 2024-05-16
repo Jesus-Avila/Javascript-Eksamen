@@ -6,13 +6,14 @@ const ingredientList = document.querySelector('#ingredientList');
 const form = document.querySelector('#cocktailForm');
 
 let ingredientCounter = 1;
+let recipeId;
 
 document.addEventListener('DOMContentLoaded', async () => {
     addIngredientAndFormEventListeners();
 
     const query = window.location.search;
     const urlParams = new URLSearchParams(query);
-    const recipeId = urlParams.get('id');
+    recipeId = urlParams.get('id');
     if (recipeId) {
         console.log('Recipe ID:', recipeId);
         const recipe = await fetchSpecificUserCreatedCocktail(recipeId);
@@ -31,6 +32,9 @@ const populateForm = (recipe) => {
     const categoryInput = document.querySelector('#cocktailCategory');
     const glassInput = document.querySelector('#cocktailGlass');
     const instructionsInput = document.querySelector('#instruction');
+
+    const formTitle = document.querySelector('#formTitle');
+    formTitle.textContent = 'Edit Cocktail Recipe';
 
     nameInput.value = recipe.strDrink;
     categoryInput.value = recipe.strCategory;
@@ -69,9 +73,24 @@ const addEventLstenerToAddIngredientButton = () => {
             li.textContent = ingredientText;
             ingredientList.appendChild(li);
             ingredientInput.value = '';
+            const deleteButton = createDeleteIngredientButton();
+            li.appendChild(deleteButton);
+            ingredientList.appendChild(li);
+            // ingredientInput.value = '';
         }
+
     });
 
+}
+
+// Create delete ingredient button
+const createDeleteIngredientButton = () => {
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('delete-ingredient-button');
+    deleteButton.addEventListener('click', (e) => {
+        ingredientList.removeChild(li);
+    });
 }
 
 // Submit form to create a new cocktail
@@ -115,9 +134,6 @@ const addEventLstenerToForm = () => {
         ingredientCounter = 1;
 
         // Check if the user is editing a recipe
-        const query = window.location.search;
-        const urlParams = new URLSearchParams(query);
-        const recipeId = urlParams.get('id');
         if (recipeId) {
             // Put the cocktail data to the database
             await putRequestRecipe(cocktailData, recipeId);
@@ -210,7 +226,6 @@ export const fetchAllUserCreatedCocktails = async (uuid) => {
             throw new Error("Network response was not ok");
         }
         const responseData = await response.json();
-        console.log("fetchAllUserCreatedCocktails", responseData.items);
         return responseData.items;
     } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
