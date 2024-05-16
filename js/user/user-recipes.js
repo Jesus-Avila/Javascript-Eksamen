@@ -57,6 +57,7 @@ const addIngredientAndFormEventListeners = () => {
     if (addIngredientButton && form){
         addEventLstenerToAddIngredientButton();
         addEventLstenerToForm();
+        addEventLstenerToIngredientInput();
     }
     else {
         console.log('addIngredientButton or Form not found in the DOM');
@@ -83,6 +84,17 @@ const addEventLstenerToAddIngredientButton = () => {
 
     });
 
+}
+
+// Add eventListener to ingredient input to avoid form submission
+const addEventLstenerToIngredientInput = () => {
+    const ingredientInput = document.querySelector('#ingredientInput');
+    ingredientInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addIngredientButton.click();
+        }
+    });
 }
 
 // Create delete ingredient button
@@ -157,7 +169,7 @@ const key = 'pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ';
 
 // Post request to database to save user-create cocktail in database
 // Creating a new endpoint for "user-created-cocktails" at user-${userUUID}-recipes
-const postRequestRecipe = async (data) => {
+export const postRequestRecipe = async (data) => {
     // i need user uuid to create the endpoint
     const userUUID = await getUuid();
     console.log("userUUID", userUUID);
@@ -212,26 +224,28 @@ const putRequestRecipe = async (data, idDrink) => {
 }
 
 // Delete request to remove a user-created cocktail from the database
-// export const deleteRequestRecipe = async (idDrink) => {
-//     const userUUID = await getUuid();
-//     const drinkUUID = await fetchUUID(idDrink, userUUID);
-//     const link = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes/${drinkUUID}`;
-//     try {
-//         const response = await fetch(link, {
-//             method: "DELETE",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Authorization": "Bearer " + key,
-//             },
-//         });
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-//         console.log("Cocktail deleted successfully");
-//     } catch (error) {
-//         console.error("There was a problem", error);
-//     }
-// }
+export const deleteRequestRecipe = async (idDrink) => {
+    const userUUID = await getUuid();
+    const drinkUUID = await fetchUUID(idDrink, userUUID);
+    const link = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes/${drinkUUID}`;
+    try {
+        const response = await fetch(link, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        console.log("Cocktail deleted successfully");
+    } catch (error) {
+        console.error("There was a problem", error);
+    }
+}
+
+
 
 
 // Get request to retrieve all user-created cocktails from the database

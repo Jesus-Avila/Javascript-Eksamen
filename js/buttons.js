@@ -1,5 +1,6 @@
 import { postRequest, deleteRequest, checkIfCocktailIsInDatabase } from "./fetch.js";
 import { mainUser } from "./user/user.js";
+import { deleteRequestRecipe, postRequestRecipe } from "./user/user-recipes.js";
 
 // Change button text to remove from favorites
 const changeButtonText = async (button, cocktail, uuid) => {
@@ -14,10 +15,14 @@ const changeButtonText = async (button, cocktail, uuid) => {
 // Create and Append Add to favorites button to Text Div
 export const createAddDeleteButton = async (cocktail) => {
   const uuid = await mainUser();
+
+  console.log("cocktial id", cocktail.idDrink);
   //Is cocktail user created?
   const isUserCreated = (cocktail) => {
-    return cocktail.idDrink.length > 8;
+    const cocktailIdString = cocktail.idDrink.toString();
+    return cocktailIdString.length > 8;
   };
+
 
   // Create button
   const favoriteButton = document.createElement("button");
@@ -47,11 +52,23 @@ export const createAddDeleteButton = async (cocktail) => {
     event.stopPropagation();
     let check = await checkIfCocktailIsInDatabase(cocktail, uuid);
     if (!check) {
-      favoriteButton.textContent = "- REMOVE";
-      await postRequest(cocktail, uuid);
+      if (isUserCreated(cocktail)) {
+        favoriteButton.textContent = "- REMOVE";
+        await postRequestRecipe(cocktail);
+      }
+      else {
+        favoriteButton.textContent = "- REMOVE";
+        await postRequest(cocktail, uuid);
+      }
     } else {
-      favoriteButton.textContent = "+ ADD";
-      await deleteRequest(cocktail.idDrink, uuid);
+      if (isUserCreated(cocktail)) {
+        favoriteButton.textContent = "+ ADD";
+        await deleteRequestRecipe(cocktail.idDrink);
+        // return
+      } else {
+        favoriteButton.textContent = "+ ADD";
+        await deleteRequest(cocktail.idDrink, uuid);
+      }
     }
   });
 
