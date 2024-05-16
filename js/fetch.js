@@ -3,7 +3,6 @@ import { fetchAllUserCreatedCocktails } from "./user/user-recipes.js";
 // crudapi key for cocktails pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ
 
 // POST request to add a new cocktail to the database
-const url = "https://crudapi.co.uk/api/v1/cocktails";
 const key = "pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ";
 
 export const postRequest = async (data, uuid) => {
@@ -66,7 +65,6 @@ export const fetchAllCocktails = async (uuid) => {
     }
 
     const responseData = await response.json();
-    console.log("fetchAllCocktails", responseData.items);
     return responseData.items;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
@@ -83,7 +81,6 @@ export const findCocktail = async (cocktailList, idDrink) => {
 // Fetch uuid of specific cocktail in the database by its idDrink
 const fetchUUID = async (id, userUUID) => {
   const cocktailList = await fetchAllCocktails(userUUID);
-  console.log("fetchUUID", cocktailList, id);
   const cocktail = await findCocktail(cocktailList, id);
   if (!cocktail) {
     console.log(`Cocktail with id ${id} not found in database`);

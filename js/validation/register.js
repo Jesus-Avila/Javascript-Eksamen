@@ -21,7 +21,6 @@ export const checkIfUserExist = async (username) => {
   try {
     const user = await checkUser(username);
     const userExists = user !== undefined;
-    console.log("User exists", userExists);
     return userExists;
   } catch (error) {
     console.log(error);
@@ -30,7 +29,6 @@ export const checkIfUserExist = async (username) => {
 
 // Post request to database to save user in database
 export const postRequest = async (data) => {
-  console.log("log from the postrequest new user", data);
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -42,7 +40,6 @@ export const postRequest = async (data) => {
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log("User added successfully:", responseData);
       return responseData;
     } else {
       throw new Error("Failed to add data");
@@ -70,7 +67,6 @@ const button = document.querySelector("#register-button");
 
 button.addEventListener("click", async (e) => {
   e.preventDefault();
-  console.log("Register Form Button clicked");
 
   // Get user input
   const data = getUserInput();

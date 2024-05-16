@@ -1,16 +1,3 @@
-// Fetch users from the database
-// Get username from input field
-// Get password from input field
-// Make an object that user is logged in session storage
-// Check if user is in database
-// Check if password matches user
-// Send user to main page if login is successful
-// Show error message if login is unsuccessful
-//
-// Fetch user from the database
-// Fetch user's favorite cocktail from database
-//
-
 // crudapi key for cocktails pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ
 const url = "https://crudapi.co.uk/api/v1/users";
 const key = "pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ";
@@ -28,7 +15,6 @@ export const getUsers = async () => {
     const data = await response.json();
     let users = data.items;
 
-    console.log("List of users", users);
     return users;
   } catch (error) {
     console.log(error);
@@ -47,21 +33,13 @@ export const getUserInput = () => {
   return data;
 };
 
-// const button = document.querySelector('#login-button');
-// button.addEventListener('click', async (e) => {
-//     e.preventDefault();
-//     console.log('Button clicked');
-// })
-
 // // Event listener for login button
 export const loginButton = () => {
   const button = document.querySelector("#login-button");
   button.addEventListener("click", async (e) => {
     e.preventDefault();
-    console.log("Button clicked");
     const data = getUserInput();
     const user = await checkUser(data.username);
-    console.log(data);
     if (user) {
       const password = checkPassword(user, data.password);
       if (password) {

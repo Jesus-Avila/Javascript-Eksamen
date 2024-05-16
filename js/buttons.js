@@ -14,7 +14,6 @@ const changeButtonText = async (button, cocktail, uuid) => {
 export const createAddDeleteButton = async (cocktail) => {
   const uuid = await mainUser();
 
-  console.log("cocktial id", cocktail.idDrink);
   //Is cocktail user created?
   const isUserCreated = (cocktail) => {
     const cocktailIdString = cocktail.idDrink.toString();

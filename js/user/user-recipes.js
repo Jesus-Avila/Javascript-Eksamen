@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(query);
   recipeId = urlParams.get("id");
   if (recipeId) {
-    console.log("Recipe ID:", recipeId);
     const recipe = await fetchSpecificUserCreatedCocktail(recipeId);
-    console.log("Recipe:", recipe);
     if (recipe) {
       populateForm(recipe);
     } else {
@@ -127,8 +125,8 @@ const addEventLstenerToForm = () => {
     const ingredientItems = ingredientList.querySelectorAll("li");
     ingredientItems.forEach((item) => {
       const ingredientName = item.firstChild.textContent;
-      const ingredientKey = `strIngredient${ingredientCounter++}`;
-      cocktailData[ingredientKey] = ingredientName;
+      //   const ingredientKey = `strIngredient${ingredientCounter++}`;
+      //   cocktailData[ingredientKey] = ingredientName;
       ingredients.push(ingredientName);
     });
     cocktailData.ingredients = ingredients;
@@ -167,8 +165,6 @@ const key = "pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ";
 export const postRequestRecipe = async (data) => {
   // i need user uuid to create the endpoint
   const userUUID = await getUuid();
-  console.log("userUUID", userUUID);
-  console.log("log from the postRequestRecipe", data);
   const url = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes`;
   const key = "pPu6m4uZxwOEhzuZVof3qzlBMBPq6n4tmUGH2hw07F9ampygeQ";
   try {
@@ -264,10 +260,8 @@ export const fetchAllUserCreatedCocktails = async (uuid) => {
 
 // Get request to retreive specific user created cocktail
 export const fetchSpecificUserCreatedCocktail = async (idDrink) => {
-  console.log("hello world");
   const userUUID = await getUuid();
   const drinkUUId = await fetchUUID(idDrink, userUUID);
-  console.log("userUUID", userUUID, "drinkUUId", drinkUUId);
   const link = `https://crudapi.co.uk/api/v1/user-${userUUID}-recipes/${drinkUUId}`;
   try {
     const response = await fetch(link, {
@@ -281,7 +275,6 @@ export const fetchSpecificUserCreatedCocktail = async (idDrink) => {
       throw new Error("Network response was not ok");
     }
     const responseData = await response.json();
-    console.log("fetchUserCreatedCocktail", responseData);
     return responseData;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -291,12 +284,10 @@ export const fetchSpecificUserCreatedCocktail = async (idDrink) => {
 // Fetch uuid of the user created cocktail
 const fetchUUID = async (idDrink, uuid) => {
   const cocktialsList = await fetchAllUserCreatedCocktails(uuid);
-  console.log("user created cocktails and idDrink", cocktialsList, idDrink);
   const cocktial = await findCocktail(cocktialsList, idDrink);
   if (!cocktial) {
     console.log(`Cocktail with id ${idDrink} not found in database`);
     return;
   }
-  console.log("uuid of the user created cocktail", cocktial._uuid);
   return cocktial._uuid;
 };

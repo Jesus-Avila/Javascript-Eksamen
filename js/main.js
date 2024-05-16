@@ -8,7 +8,6 @@ let selectedFilter = null;
 // Append the new cocktails cocktail-list in the DOM
 const fetchMoreCocktails = async () => {
   let newArray = [];
-  console.log("Selected filter", selectedFilter);
   if (!selectedFilter) {
     newArray = await fetchTenRandomCocktails();
   } else {
@@ -38,7 +37,6 @@ const fetchTenCocktailsByCategory = async (category) => {
     }
     requestCounter++;
   }
-  console.log("Cocktails found by category", cocktails);
   return cocktails;
 };
 
@@ -47,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     cocktailsArray = cocktails;
     // Save array in sessionStorage
     sessionStorage.setItem("cocktails", JSON.stringify(cocktailsArray));
-    console.log("Cocktails array", cocktailsArray);
     cocktailsArray.forEach((cocktail) => {
       cocktailCard(cocktail);
     });
@@ -57,9 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 // "All" filter button
 const allButton = document.querySelector("#all-cocktails-filter");
 allButton.addEventListener("click", async () => {
-  console.log("All cocktails button clicked");
   const array = JSON.parse(sessionStorage.getItem("cocktails"));
-  console.log("All cocktails array", array);
   updateCocktailList(array);
 });
 
@@ -68,12 +63,10 @@ const filterButtons = document.querySelectorAll(".filter-button");
 filterButtons.forEach((button) => {
   button.addEventListener("click", async () => {
     const filter = button.textContent;
-    console.log("Filter button clicked", filter);
 
     selectedFilter = filter;
     filterButtons.forEach((btn) => btn.classList.remove("selected"));
     button.classList.add("selected");
-    console.log("Selected filter", selectedFilter);
 
     let filteredCocktails = [];
     let array = JSON.parse(sessionStorage.getItem("cocktails"));
@@ -83,7 +76,6 @@ filterButtons.forEach((button) => {
       updateCocktailList(cocktails);
     } else {
       filteredCocktails = array.filter((cocktail) => cocktail.strCategory === filter);
-      console.log("array of arrays", filteredCocktails);
       updateCocktailList(filteredCocktails);
     }
   });
@@ -103,6 +95,5 @@ const updateCocktailList = (cocktails) => {
 // Load more button
 const loadMoreButton = document.querySelector("#load-more");
 loadMoreButton.addEventListener("click", async () => {
-  console.log("Load more button clicked");
   fetchMoreCocktails();
 });

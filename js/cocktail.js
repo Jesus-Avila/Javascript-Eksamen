@@ -16,11 +16,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Handle the case where the cocktail is from the user's created recipes
   let cocktail;
   if (cocktailIDLength < 8) {
-    console.log("Specific cocktail fetched from API", cocktail);
     cocktail = await fetchSpecificCocktail(cocktailID);
     changeCocktailInfo(cocktail);
   } else {
-    console.log("Specific user created cocktail fetched from API", cocktail);
     cocktail = await fetchSpecificUserCreatedCocktail(cocktailID);
     addEditButton(cocktail);
     changeCocktailInfo(cocktail);
@@ -48,29 +46,38 @@ const buttonContainer = document.querySelector(".button-container");
 
 // Change information on the page based on the cocktail data
 const changeCocktailInfo = async (cocktail) => {
-  console.log("cocktail", cocktail);
-
   // Change the text content of the elements
   cocktailName.textContent = cocktail.strDrink;
   cocktailGlass.textContent = cocktail.strGlass;
 
-  // Create an array of ingredients and measurements
-  const ingredients = [];
-  for (let i = 1; i <= 15; i++) {
-    const ingredient = cocktail[`strIngredient${i}`];
-    const measurement = cocktail[`strMeasure${i}`];
-    if (ingredient) {
-      const ingredientText = measurement ? `${ingredient} - ${measurement}` : ingredient;
-      ingredients.push(ingredientText);
-    }
-  }
+  //   cocktailIngredients.innerHTML = "";
 
-  // append the ingredients to the list
-  ingredients.forEach((ingredient) => {
-    const li = document.createElement("li");
-    li.textContent = ingredient;
-    cocktailIngredients.appendChild(li);
-  });
+  let ingredients = [];
+
+  if (cocktail.ingredients) {
+    ingredients = cocktail.ingredients || [];
+
+    ingredients.forEach((ingredient) => {
+      const li = document.createElement("li");
+      li.textContent = ingredient;
+      cocktailIngredients.appendChild(li);
+    });
+  } else {
+    // Non user-created cocktail
+    for (let i = 1; i <= 15; i++) {
+      const ingredient = cocktail[`strIngredient${i}`];
+      const measurement = cocktail[`strMeasure${i}`];
+      if (ingredient) {
+        const ingredientText = measurement ? `${ingredient} - ${measurement}` : ingredient;
+        ingredients.push(ingredientText);
+      }
+    }
+    ingredients.forEach((ingredient) => {
+      const li = document.createElement("li");
+      li.textContent = ingredient;
+      cocktailIngredients.appendChild(li);
+    });
+  }
 
   const cocktailImage = document.createElement("img");
   cocktailImage.src = cocktail.strDrinkThumb;
