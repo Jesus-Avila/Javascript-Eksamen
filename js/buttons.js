@@ -4,14 +4,12 @@ import { deleteRequestRecipe, postRequestRecipe } from "./user/user-recipes.js";
 
 // Change button text to remove from favorites
 const changeButtonText = async (button, cocktail, uuid) => {
-    const isInDatabase = await checkIfCocktailIsInDatabase(cocktail, uuid);
-    const result = isInDatabase ? (button.textContent = "- REMOVE") : (button.textContent = "+ ADD");
-    return result;
+  const isInDatabase = await checkIfCocktailIsInDatabase(cocktail, uuid);
+  const result = isInDatabase ? (button.textContent = "- REMOVE") : (button.textContent = "+ ADD");
+  return result;
 };
 
-
-
-  // COCKTAIL CARD BUTTON
+// COCKTAIL CARD BUTTON
 // Create and Append Add to favorites button to Text Div
 export const createAddDeleteButton = async (cocktail) => {
   const uuid = await mainUser();
@@ -22,7 +20,6 @@ export const createAddDeleteButton = async (cocktail) => {
     const cocktailIdString = cocktail.idDrink.toString();
     return cocktailIdString.length > 8;
   };
-
 
   // Create button
   const favoriteButton = document.createElement("button");
@@ -37,7 +34,7 @@ export const createAddDeleteButton = async (cocktail) => {
   align-self: center;
   margin-top: 20px;
   max-width: 300px;`;
-  
+
   favoriteButton.classList.add("favorite-button");
   favoriteButton.addEventListener("mouseover", () => {
     favoriteButton.style.backgroundColor = "#f2a154";
@@ -45,7 +42,7 @@ export const createAddDeleteButton = async (cocktail) => {
   favoriteButton.addEventListener("mouseout", () => {
     favoriteButton.style.backgroundColor = "#e3cb90";
   });
-  
+
   // Add to favorites button functionality
   favoriteButton.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -55,8 +52,7 @@ export const createAddDeleteButton = async (cocktail) => {
       if (isUserCreated(cocktail)) {
         favoriteButton.textContent = "- REMOVE";
         await postRequestRecipe(cocktail);
-      }
-      else {
+      } else {
         favoriteButton.textContent = "- REMOVE";
         await postRequest(cocktail, uuid);
       }
@@ -74,4 +70,3 @@ export const createAddDeleteButton = async (cocktail) => {
 
   return favoriteButton;
 };
-

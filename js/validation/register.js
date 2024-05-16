@@ -62,13 +62,7 @@ export const getUuid = async (username) => {
 
 // Toggle from register to login form when user is successfully registered
 export const toggleForm = () => {
-  // const loginForm = document.querySelector('#login-form');
-  // const registerForm = document.querySelector('#register-form');
-  // loginForm.style.display('hidden');
-  // registerForm.style.display('hidden');
-
-  // Reload the page
-  location.reload(); ///// BETTER SOLUTION NEEDED
+  location.reload();
 };
 
 // Event listener for register button
@@ -96,7 +90,7 @@ button.addEventListener("click", async (e) => {
 
   // Check if user exists
   const user = await checkIfUserExist(data.username);
-  
+
   // If user exists, alert user that they are already registered, else alert user that they have been registered
   if (user) {
     alert("Registration failed");

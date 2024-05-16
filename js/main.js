@@ -30,7 +30,7 @@ const fetchTenCocktailsByCategory = async (category) => {
   const cocktails = [];
   let requestCounter = 0;
   const maxRequests = 60;
-  while (cocktails.length < 10  && requestCounter < maxRequests) {
+  while (cocktails.length < 10 && requestCounter < maxRequests) {
     const cocktail = await fetchRandomCocktail();
     if (cocktail.strCategory === category) {
       // Save cocktail in cocktails array
@@ -38,8 +38,8 @@ const fetchTenCocktailsByCategory = async (category) => {
     }
     requestCounter++;
   }
-  console.log('Cocktails found by category', cocktails);
-  return (cocktails);
+  console.log("Cocktails found by category", cocktails);
+  return cocktails;
 };
 
 document.addEventListener("DOMContentLoaded", async () => {

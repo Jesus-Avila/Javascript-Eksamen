@@ -1,46 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Page</title>
-    <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/mypage.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/mypage.css" />
+  </head>
+  <body>
     <header>
-        <div>
-            <p>
-                JavaScript & API Eksamen
-            </p>
-        </div>
-        <div>
-            <img src="./assets/discovery-cocktail-logo.png" alt="Discovery Cocktail Logo">
-        </div>
-    <nav>
+      <div>
+        <p>JavaScript & API Eksamen</p>
+      </div>
+      <div>
+        <img src="./assets/discovery-cocktail-logo.png" alt="Discovery Cocktail Logo" />
+      </div>
+      <nav>
         <ul>
-            <li><a href="./main.html">Home</a></li>
-            <li><a href="./mypage.html">My Page</a></li>
+          <li><a href="./main.html">Home</a></li>
+          <li><a href="./mypage.html">My Page</a></li>
         </ul>
-    </nav>
-</header>
+      </nav>
+    </header>
     <div class="top-text">
-        <h1>My page</h1>
-        <p>Here you can find your favorite and own cocktail recipes </p>
+      <h1>My page</h1>
+      <p>Here you can find your favorite and own cocktail recipes</p>
     </div>
 
     <div class="newRecipeRedirectContainer">
-        <a href="./myrecipe.html" id="newRecipeRedirect">Create new recipe</a>
+      <a href="./myrecipe.html" id="newRecipeRedirect">Create new recipe</a>
     </div>
     <div class="filter-buttons">
-        <button class="filter-button" id="my-favorites">My Favorites</button>
-        <button class="filter-button" id="my-recipes">My Recipes</button>
+      <button class="filter-button" id="my-favorites">My Favorites</button>
+      <button class="filter-button" id="my-recipes">My Recipes</button>
     </div>
 
-    <div class="cocktail-list">
-    </div>
+    <div class="cocktail-list"></div>
 
     <script type="module" src="./js/mypage.js"></script>
     <script type="module" src="./js/user/user-recipes.js"></script>
-</body>
+  </body>
 </html>
